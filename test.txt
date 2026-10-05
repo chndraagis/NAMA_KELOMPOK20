@@ -1,0 +1,89 @@
+# Nama   : Faiz Bayu Setiana (21120126120034)
+#          Alvan Chisbulloh (21120126120002)
+#          Adiba Khanza Azzahra (21120126120041)
+#          Chandra Agisti Nawangsih (21120126130051)
+# Kelompok : 20
+# Shift    : 3
+# Program  : Sistem Rekap Nilai Ujian Mahasiswa
+
+def hitung_rata(nilai1, nilai2, nilai3):
+    return (nilai1 + nilai2 + nilai3) / 3
+
+def tentukan_grade(rata):
+    if rata >= 85:
+        return "A"
+    elif rata >= 75:
+        return "B"
+    elif rata >= 65:
+        return "C"
+    elif rata >= 50:
+        return "D"
+    else:
+        return "E"
+
+def versi_program():
+    return "Sistem Rekap Nilai Ujian v1.0 - Kelompok 20"
+
+class Mahasiswa:
+    def __init__(self, nama, nim):
+        self.nama = nama
+        self.nim = nim
+        self.rata = 0
+        self.grade = ""
+
+    def set_nilai(self, rata, grade):
+        self.rata = rata
+        self.grade = grade
+
+    def tampilkan_biodata(self):
+        print("Nama  : " + self.nama)
+        print("NIM   : " + self.nim)
+        print("Rata2 : " + str(round(self.rata, 2)))
+        print("Grade : " + self.grade)
+
+print("=" * 46)
+print("  " + versi_program())
+print("  Kelompok 20 - Faiz, Alvan, Adiba, Chandra")
+print("=" * 46)
+
+jumlah_mhs = 0
+while jumlah_mhs < 1:
+    jumlah_mhs = int(input("Jumlah mahasiswa yang akan didata: "))
+    if jumlah_mhs < 1:
+        print("Input tidak valid! Jumlah mahasiswa minimal 1.")
+
+daftar = []
+for i in range(1, jumlah_mhs + 1):
+    print("\n--- DATA MAHASISWA KE-" + str(i) + " ---")
+    nama = input("Nama : ")
+    nim = input("NIM  : ")
+
+    nilai_tugas = -1
+    while nilai_tugas < 0 or nilai_tugas > 100:
+        nilai_tugas = int(input("Nilai Tugas (0-100) : "))
+        if nilai_tugas < 0 or nilai_tugas > 100:
+            print("Nilai tidak valid! Harus di antara 0 dan 100.")
+
+    nilai_uts = int(input("Nilai UTS (0-100)   : "))
+    nilai_uas = int(input("Nilai UAS (0-100)   : "))
+
+    rata = hitung_rata(nilai_tugas, nilai_uts, nilai_uas)
+    grade = tentukan_grade(rata)
+
+    mhs = Mahasiswa(nama, nim)
+    mhs.set_nilai(rata, grade)
+    mhs.tampilkan_biodata()
+    daftar.append(mhs)
+
+print("\n" + "=" * 46)
+print("  REKAP JUMLAH MAHASISWA PER GRADE")
+print("=" * 46)
+for g in ["A", "B", "C", "D", "E"]:
+    jumlah_grade = 0
+    for mhs in daftar:
+        if mhs.grade == g:
+            jumlah_grade += 1
+    print("Grade " + g + " : " + str(jumlah_grade) + " mahasiswa")
+
+print("\nSistem rekap nilai selesai. Terima kasih.")
+
